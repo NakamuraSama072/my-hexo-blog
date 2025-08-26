@@ -1428,8 +1428,8 @@ wavy {
 }
 
 psw {
-  color: transpanett;
-  background: #a1a1a1;
+  color: #909090;
+  background: #909090;
   border-radius: 2px;
   -webkit-transition: all .28s ease;
   -moz-transition: all .28s ease;
@@ -1446,9 +1446,19 @@ psw:hover {
   background: 0 0
 }
 
+/* 
 blur {
-  text-shadow: rgba(0,0,0,.7) 0 0 0.625rem;
-  color: transpanett;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  color: transpanet;
+}
+ */
+
+blur {
+  filter: blur(4px);
+}
+
+blur:hover {
+  filter: none;
 }
 
 [data-theme="dark"] u,[data-theme="dark"] emp,[data-theme="dark"] wavy,[data-theme="dark"] del,[data-theme="dark"] psw:hover {

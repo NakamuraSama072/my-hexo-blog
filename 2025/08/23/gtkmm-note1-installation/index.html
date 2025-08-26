@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>gtkmm 教程（1）—— gtkmm 的安装与使用 | NakamuraSama072's Blog</title><meta name="author" content="NakamuraSama072"><meta name="copyright" content="NakamuraSama072"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="如何设置 GTK 和 gtkmm 的开发环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gtkmm 教程（1）—— gtkmm 的安装与使用">
+<meta property="og:url" content="https://blogs.nakamurasama072.com/2025/08/23/gtkmm-note1-installation/index.html">
+<meta property="og:site_name" content="NakamuraSama072&#39;s Blog">
+<meta property="og:description" content="如何设置 GTK 和 gtkmm 的开发环境">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogs.nakamurasama072.com/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-23T07:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-25T16:24:04.735Z">
+<meta property="article:author" content="NakamuraSama072">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="C++,gtkmm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogs.nakamurasama072.com/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "gtkmm 教程（1）—— gtkmm 的安装与使用",
+  "url": "https://blogs.nakamurasama072.com/2025/08/23/gtkmm-note1-installation/",
+  "image": "https://blogs.nakamurasama072.com/img/avatar.jpg",
+  "datePublished": "2025-08-23T07:00:00.000Z",
+  "dateModified": "2025-08-25T16:24:04.735Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "NakamuraSama072",
+      "url": "https://blogs.nakamurasama072.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/winter-50x50.png"><link rel="canonical" href="https://blogs.nakamurasama072.com/2025/08/23/gtkmm-note1-installation/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'gtkmm 教程（1）—— gtkmm 的安装与使用',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/tag.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://enblogs.nakamurasama072.com"><span> English</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://jablogs.nakamurasama072.com"><span> 日本語</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-circle-info"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/ibuki-light_darker.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/winter-50x50.png" alt="Logo"><span class="site-name">NakamuraSama072's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">gtkmm 教程（1）—— gtkmm 的安装与使用</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://enblogs.nakamurasama072.com"><span> English</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://jablogs.nakamurasama072.com"><span> 日本語</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-circle-info"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">gtkmm 教程（1）—— gtkmm 的安装与使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-23T07:00:00.000Z" title="发表于 2025-08-23 15:00:00">2025-08-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-25T16:24:04.735Z" title="更新于 2025-08-26 00:24:04">2025-08-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/gtkmm/">gtkmm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.gtk.org/">GTK</a> 是由 GNOME 官方推出的 GNOME 桌面环境应用程序开发包。它基于事件驱动，在执行时，会监听应用程序内发生的事件，例如单击鼠标，改变窗体大小，再向应用程序内的组件告知信息。</p>
+<p>GTK 支持 C, JavaScript, Python, Rust 等多种语言<psw title="你知道的太多了">（你猜为什么没有 Java）</psw>。然而，从网页上给出的示例代码来看，本人相对熟悉的 C 语言实现版本较为复杂，而 Python 相对简单，却并非本文所探讨的范畴（你看，分类写的是 C++，所以不会有 Python）。因此，我们这里选用语法风格更像 C++ 的扩展包，也就是 <code>gtkmm</code> 作为这个系列的开发工具包。</p>
+<h2 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h2><p>这个系列使用的默认开发环境如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Manjaro</td>
+<td>25</td>
+</tr>
+<tr>
+<td>gtkmm</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>CLion</td>
+<td>2025.2</td>
+</tr>
+</tbody></table>
+<p>补充：</p>
+<ol>
+<li><p>如果你习惯使用 <code>Ubuntu</code> 或者其他发行版也是可以的！这里不做强制要求！这个系列只是以 <code>Manjaro</code> 为例！（注意，macOS 不支持）</p>
+</li>
+<li><p>如果你对 C++ 的语法规则不熟悉，请先阅读 <a target="_blank" rel="noopener" href="https://www.stroustrup.com/">C++ 教程</a> 。这个系列至少需要你学会 OOP 中的<strong>继承</strong>部分。</p>
+</li>
+</ol>
+<h2 id="安装-gtkmm"><a href="#安装-gtkmm" class="headerlink" title="安装 gtkmm"></a>安装 <code>gtkmm</code></h2><p>在 <code>Manjaro</code> 上安装 <code>gtkmm</code> 的过程非常简单，只需要一行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S gtkmm-4.0</span><br></pre></td></tr></table></figure>
+
+<p>在其他系列的发行版上安装 <code>gtkmm</code> 的命令如下：</p>
+<div class="tabs"><div class="nav-tabs"><button type="button" class="tab active"><i class="fab fa-debian"></i>Debian</button><button type="button" class="tab"><i class="fab fa-fedora"></i>Fedora</button></div><div class="tab-contents"><div class="tab-item-content active"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install libgtkmm-4.0-dev</span><br></pre></td></tr></table></figure></div><div class="tab-item-content"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install gtkmm-4.0-dev</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div>
+
+<div class="note warning flat"><p>某些发行版上相对应的名称和将要安装的软件包版本可能有所不同。</p>
+<p>例如，在 <code>Arch Linux</code> 系的发行版中，该软件包有 <code>gtkmm</code> 和 <code>gtkmm-4.0</code> 两个版本，它们所指向的 <code>gtkmm</code> 版本是不一样的！这一点可以通过检查比对依赖项版本得出。</p>
+</div>
+
+<p>一般来说，发行版提供的包管理器都会自动帮我们安装好依赖项。为了方便大家对比，这里列出几个作为参考：</p>
+<p><img src="/2025/08/23/gtkmm-note1-installation/dependencies-version.png" alt="gtkmm 4.0 需要的依赖项版本"></p>
+<h2 id="第一个项目"><a href="#第一个项目" class="headerlink" title="第一个项目"></a>第一个项目</h2><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>打开任意一个代码编辑器（这里我用的是 CLion，其他编辑器也行），创建一个名为 <code>hello.cpp</code> 的源文件，并输入（或复制粘贴）以下内容：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// It&#x27;s OK if you want some other cool names</span></span><br><span class="line"><span class="comment">// This depends on you!</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;gtkmm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Custom GTK Window Class.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomGTKWindow</span> : <span class="keyword">public</span> Gtk::Window &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">CustomGTKWindow</span>(); <span class="comment">// Constructor</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CustomGTKWindow::<span class="built_in">CustomGTKWindow</span>() &#123;</span><br><span class="line">    <span class="built_in">set_title</span>(<span class="string">&quot;Hello World&quot;</span>); <span class="comment">// set default title</span></span><br><span class="line">    <span class="built_in">set_default_size</span>(<span class="number">800</span>, <span class="number">600</span>); <span class="comment">// set height and width of the window</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// As you can see this one is much simpler than WinMain and even Qt.</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> lang = <span class="string">&quot;C++&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello and welcome to &quot;</span> &lt;&lt; lang &lt;&lt; <span class="string">&quot;!\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> app = Gtk::Application::<span class="built_in">create</span>(<span class="string">&quot;org.gtkmm.examples.hello_world&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> app-&gt;<span class="built_in">make_window_and_run</span>&lt;CustomGTKWindow&gt;(argc, argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（<a target="_blank" rel="noopener" href="https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/chapter-basics.html">原教程</a>使用 <code>.cc</code> 作为源文件后缀名。<code>.cc</code> 是一种在 Linux&#x2F;UNIX 系统上广泛使用的 C++ 源文件格式，对该类系统的优化较好。但这里为了更广泛的兼容性，我们仍然采用传统的 <code>.cpp</code> 后缀名。）</p>
+<p>如果你的 IDE 内出现以下报错：</p>
+<p><img src="/2025/08/23/gtkmm-note1-installation/unable-to-find-gtkmm.png" alt="找不到文件 &quot;gtkmm.h&quot;"></p>
+<p>请打开同一目录下的 <code>CMakeLists.txt</code>，将里面的内容修改为下面的代码片段：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">4.0</span>) <span class="comment"># change if there is a newer version</span></span><br><span class="line"><span class="keyword">project</span>(hello_world) <span class="comment"># replace it with your name</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">20</span>) <span class="comment"># use your own C++ standard, but make sure no earlier than C++ 17</span></span><br><span class="line"><span class="keyword">find_package</span>(PkgConfig)</span><br><span class="line">pkg_check_modules(GTKMM gtkmm-<span class="number">4.0</span>) <span class="comment"># Not gtkmm-3.0!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;GTKMM_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"><span class="keyword">link_directories</span>(<span class="variable">$&#123;GTKMM_LIBRARY_DIRS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set(SOURCE_FILES main.cpp MainWindow.cpp MainWindow.h)</span></span><br><span class="line"><span class="keyword">add_executable</span>(hello_world main.cpp) <span class="comment"># replace it with your name</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span> <span class="variable">$&#123;GTKMM_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后重启 IDE. 问题应该可以得到解决。</p>
+<div class="note info flat"><p>具体可以参考一下这个链接：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45637558/how-to-configure-clion-to-compile-gtkmm-project">StackOverflow</a></p>
+</div>
+
+<h3 id="结果与解释"><a href="#结果与解释" class="headerlink" title="结果与解释"></a>结果与解释</h3><p>接下来，我们来编译并运行程序。得到的结果应该和下面相似：</p>
+<p><img src="/2025/08/23/gtkmm-note1-installation/main-window.png" alt="运行结果，出现一个窗体"></p>
+<p>（请注意，<strong>如果你用的是 GNOME 桌面环境，那么样式应该和 <code>Adwaita</code> 类似</strong>）</p>
+<p>这是因为我们目前只是<strong>添加了一个窗口标题</strong>并<strong>设定了宽和高</strong>。我们先来看看这段代码的含义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;gtkmm.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>它表示导入 <code>gtkmm.h</code> 库。这对于使用 <code>gtkmm</code> 构建的应用来说是必需的。但是严格意义上说，直接使用这个头文件并不是一个好主意——它含有 1 M 左右大小的标头！很显然这会拖慢编译速度。</p>
+<p>下面来看代码最主要的部分，也就是 <code>CustomGTKWindow</code> 类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Custom GTK Window Class.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomGTKWindow</span> : <span class="keyword">public</span> Gtk::Window &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">CustomGTKWindow</span>(); <span class="comment">// Constructor</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CustomGTKWindow::<span class="built_in">CustomGTKWindow</span>() &#123;</span><br><span class="line">    <span class="built_in">set_title</span>(<span class="string">&quot;Hello World&quot;</span>); <span class="comment">// set default title</span></span><br><span class="line">    <span class="built_in">set_default_size</span>(<span class="number">800</span>, <span class="number">600</span>); <span class="comment">// set height and width of the window</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样地，这个类也是必需的。<strong>它必须继承自命名空间（你可以把它理解为和 <code>std</code> 一个效力的东西）<code>Gtk</code> 中定义的类 <code>Window</code>，并且有一个构造函数</strong>（析构函数可以不写）。下面构造函数的实现部分则详细展示了初始化窗体时，对窗体进行初步配置的代码。函数很好理解，我就不过多介绍了。</p>
+<p>最后，在 <code>main</code> 函数内：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> app = Gtk::Application::<span class="built_in">create</span>(<span class="string">&quot;org.gtkmm.examples.hello_world&quot;</span>);</span><br><span class="line"><span class="keyword">return</span> app-&gt;<span class="built_in">make_window_and_run</span>&lt;CustomGTKWindow&gt;(argc, argv);</span><br></pre></td></tr></table></figure>
+
+<p>它们的作用是创建并初始化窗体对象，这个过程会调用类的构造函数。</p>
+<p>更详细一点说（内容修改自机翻）：<br>程序首先创建的是一个存储在 <code>Glib::RefPtr</code> <strong>智能指针</strong>（这是 C++ 11 引入的新特性，相较于传统指针更具有内存安全性）内的 <code>Gtk::Application</code> 对象。<code>create()</code> 方法会初始化 <code>gtkmm</code>。接下来，程序会创建并显示一个窗口并进入 <code>gtkmm</code> 主处理循环（这一点和 <code>tkinter</code> 类似！），该循环将在窗口关闭时完成。然后，<code>main()</code> 函数将返回适当的成功或错误代码。如果从命令行执行程序，<code>argc</code> 和 <code>argv</code> 参数会作为额外参数传递给应用程序。此外在调用 <code>make_window_and_run()</code> 时，系统会检查这两个参数，但今天我们写的这个简单的应用程序并不会使用它们。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>至此，你已经成功完成了第一步——创建一个简单的 <code>gtkmm</code> 应用程序。虽然开发一个完整的应用并不是一件很容易的事，但最起码我们已经迈出了决定性的一步。现在，你可以休息一下了！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/sec-install-unix-and-linux.html">gtkmm Tutorial Chapter 2: Installation</a></p>
+<p><a target="_blank" rel="noopener" href="https://gnome.pages.gitlab.gnome.org/gtkmm-documentation/chapter-basics.html">gtkmm Tutorial Chapter 3: Simple Example</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blogs.nakamurasama072.com">NakamuraSama072</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blogs.nakamurasama072.com/2025/08/23/gtkmm-note1-installation/">https://blogs.nakamurasama072.com/2025/08/23/gtkmm-note1-installation/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blogs.nakamurasama072.com" target="_blank">NakamuraSama072's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/C-gtkmm/">C++,gtkmm</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/18/changelog2/" title="2025-8-18 v2.0 Changelog"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">2025-8-18 v2.0 Changelog</div></div><div class="info-2"><div class="info-item-1">2.0 大版本 Changelog</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/08/11/debian-13/" title="Debian 13 升级指南"><img class="cover" src="https://q9.itc.cn/q_70/images03/20241205/909426dbdd3c498490c75eaf211ddb48.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="fas fa-history fa-fw"></i> 2025-08-18</div><div class="info-item-2">Debian 13 升级指南</div></div><div class="info-2"><div class="info-item-1">如何从 Debian 12 Bookworm 升级到 Debian 13 Trixie</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">NakamuraSama072</div><div class="author-info-description">A Linux enthusiast and C/C++ programmer.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/NakamuraSama072"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/NakamuraSama072" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/3494374969183105" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #00a1d6;"></i></a><a class="social-icon" href="mailto:kamidenyichiyan@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">该站点目前仍在建设中，网页随时可能会崩溃，请注意</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D"><span class="toc-number">1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-gtkmm"><span class="toc-number">2.</span> <span class="toc-text">安装 gtkmm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text">第一个项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.1.</span> <span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E4%B8%8E%E8%A7%A3%E9%87%8A"><span class="toc-number">3.2.</span> <span class="toc-text">结果与解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">4.</span> <span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/23/gtkmm-note1-installation/" title="gtkmm 教程（1）—— gtkmm 的安装与使用">gtkmm 教程（1）—— gtkmm 的安装与使用</a><time datetime="2025-08-23T07:00:00.000Z" title="发表于 2025-08-23 15:00:00">2025-08-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/18/changelog2/" title="2025-8-18 v2.0 Changelog">2025-8-18 v2.0 Changelog</a><time datetime="2025-08-17T20:48:19.000Z" title="发表于 2025-08-18 04:48:19">2025-08-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/08/11/debian-13/" title="Debian 13 升级指南"><img src="https://q9.itc.cn/q_70/images03/20241205/909426dbdd3c498490c75eaf211ddb48.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Debian 13 升级指南"/></a><div class="content"><a class="title" href="/2025/08/11/debian-13/" title="Debian 13 升级指南">Debian 13 升级指南</a><time datetime="2025-08-11T08:14:12.000Z" title="发表于 2025-08-11 16:14:12">2025-08-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/09/first-blog/" title="2025-8-9 v1.0 Changelog">2025-8-9 v1.0 Changelog</a><time datetime="2025-08-09T00:40:23.000Z" title="发表于 2025-08-09 08:40:23">2025-08-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/ibuki-light_darker.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By NakamuraSama072</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div><div class="footer_custom_text">NakamuraSama072's Blog - Linux, and You</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src="http://ip-api.com/json/"></script><script src="/js/ip_content.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="Linux,and,You,C,C++" data-fontsize="15px" data-random="false" async="async"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
